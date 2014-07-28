@@ -169,6 +169,17 @@ module Feedjira
       curl.follow_location = true
     end
 
+    if RUBY_PLATFORM == 'java'
+      def self._ensure_not_jruby
+        raise "Feedjira's feed-fetching features are not available under JRuby at this time, because it relies " +
+          "on Curb to do its work, and Curb isn't supported under JRuby. However, the rest of Feedjira is available."
+      end
+    else
+      def self._ensure_not_jruby
+        # okie dokie!
+      end
+    end
+
     # Fetches and returns the raw XML for each URL provided.
     #
     # === Parameters
@@ -184,8 +195,9 @@ module Feedjira
     #
     # A Hash if multiple URL's are passed. The key will be the URL, and the value the XML.
     def self.fetch_raw(urls, options = {})
+      _ensure_not_jruby
       url_queue = [*urls]
-      multi = Curl::Multi.new
+      multi = ::Curl::Multi.new
       responses = {}
       url_queue.each do |url|
         easy = Curl::Easy.new(url) do |curl|
@@ -224,6 +236,7 @@ module Feedjira
     #
     # A Hash if multiple URL's are passed. The key will be the URL, and the value the Feed object.
     def self.fetch_and_parse(urls, options = {})
+      _ensure_not_jruby
       url_queue = [*urls]
       multi = Curl::Multi.new
       responses = {}
@@ -276,6 +289,7 @@ module Feedjira
     #
     # A Hash if multiple Feeds are passed. The key will be the URL, and the value the updated Feed object.
     def self.update(feeds, options = {})
+      _ensure_not_jruby
       feed_queue = [*feeds]
       multi = Curl::Multi.new
       responses = {}
@@ -303,6 +317,7 @@ module Feedjira
     # === Returns
     # The updated Curl::Multi object with the request details added to it's stack.
     def self.add_url_to_multi(multi, url, url_queue, responses, options)
+      _ensure_not_jruby
       easy = Curl::Easy.new(url) do |curl|
         setup_easy curl, options
         curl.headers["If-Modified-Since"] = options[:if_modified_since].httpdate if options.has_key?(:if_modified_since)
@@ -372,6 +387,7 @@ module Feedjira
     # === Returns
     # The updated Curl::Multi object with the request details added to it's stack.
     def self.add_feed_to_multi(multi, feed, feed_queue, responses, options)
+      _ensure_not_jruby
       easy = Curl::Easy.new(feed.feed_url) do |curl|
         setup_easy curl, options
         curl.headers["If-Modified-Since"] = feed.last_modified.httpdate if feed.last_modified

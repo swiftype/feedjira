@@ -20,8 +20,14 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
 
   s.add_dependency 'sax-machine', '~> 0.2.1'
-  s.add_dependency 'curb',        '~> 0.8.1'
   s.add_dependency 'loofah',      '~> 2.0.0'
+
+  if RUBY_PLATFORM == 'java'
+    s.platform = 'java'
+  else
+    s.platform = Gem::Platform::RUBY
+    s.add_dependency 'curb',        '~> 0.8.1'
+  end
 
   s.add_development_dependency 'rspec', '~> 2.14.0'
 end
