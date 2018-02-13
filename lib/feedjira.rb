@@ -1,5 +1,5 @@
 require 'zlib'
-require 'curb' unless RUBY_PLATFORM == 'java'
+require 'curb'
 require 'sax-machine'
 require 'loofah'
 

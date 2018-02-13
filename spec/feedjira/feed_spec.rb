@@ -284,8 +284,6 @@ describe Feedjira::Feed do
         @curl = double('curl', :headers => {}, :follow_location= => true, :on_failure => true, :on_complete => true)
         @curl.stub(:on_success).and_yield(@cmock)
 
-        pending "Not supported under JRuby" if RUBY_PLATFORM == 'java'
-
         Curl::Multi.stub(:new).and_return(@multi)
         Curl::Easy.stub(:new).and_yield(@curl).and_return(@curl_easy)
       end
@@ -356,7 +354,6 @@ describe Feedjira::Feed do
     describe "#add_url_to_multi" do
       before(:each) do
         allow_message_expectations_on_nil
-        pending "Not supported under JRuby" if RUBY_PLATFORM == 'java'
         @multi = Curl::Multi.get([@paul_feed[:url]], {:follow_location => true}, {:pipeline => true})
         @multi.stub(:add)
         @easy_curl = Curl::Easy.new(@paul_feed[:url])
@@ -562,7 +559,6 @@ describe Feedjira::Feed do
     describe "#add_feed_to_multi" do
       before(:each) do
         allow_message_expectations_on_nil
-        pending "Not supported under JRuby" if RUBY_PLATFORM == 'java'
         @multi = Curl::Multi.get([@paul_feed[:url]], {:follow_location => true}, {:pipeline => true})
         @multi.stub(:add)
         @easy_curl = Curl::Easy.new(@paul_feed[:url])
@@ -709,8 +705,6 @@ describe Feedjira::Feed do
 
     describe "#fetch_and_parse" do
       it "passes options to multicurl" do
-        pending "Not supported under JRuby" if RUBY_PLATFORM == 'java'
-
         options = { user_agent: '007' }
 
         Feedjira::Feed.should_receive(:add_url_to_multi).
@@ -761,8 +755,6 @@ describe Feedjira::Feed do
 
     describe "#update" do
       it "passes options to multicurl" do
-        pending "Not supported under JRuby" if RUBY_PLATFORM == 'java'
-
         options = { user_agent: '007' }
 
         Feedjira::Feed.should_receive(:add_feed_to_multi).
