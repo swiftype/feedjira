@@ -1,5 +1,70 @@
 # Feedjira Changelog
 
+## 2.1.3
+
+* Enhancements
+  * No longer log date parsing errors as warnings, they are now debug messages
+
+## 2.1.1
+
+configurable logging and parsing
+
+## 2.1.0
+
+* Enhancements
+  * AtomYoutube is now a supported parser [#337][] (@jfiorato)
+  * Oga parsing is now supported [#331][] (@krasnoukhov)
+  * DateTime Handler now supports localized dates [#313][] (@PascalTurbo)
+  * RSS now supports language attribute [#344][] (@PascalTurbo)
+  * ITunesRSS added support for:
+    * `ttl` and `last_built` [#343][] (@sferik)
+    * `itunes_category` and `itunes_category_paths` [#329][] (@knu)
+    * `itunes_complete` [#328][] (@knu)
+    * single quoted attributes [#326][] (@sferik)
+    * Add image attribute [#349][] (@sferik)
+
+## 2.0.0
+
+* General
+  * Replaced curb with faraday
+  * Removed update functionality
+
+## 1.6.0
+
+* Enhancements
+  * PuSH support for RSS [#256][]
+
+[#256]: https://github.com/feedjira/feedjira/pull/256
+
+## 1.5.0
+
+* Enhancements
+  * Handle XHTML content in summary and title [#250][]
+
+[#250]: https://github.com/feedjira/feedjira/pull/250
+
+## 1.4.0
+
+* General
+  * Test OX on Travis
+  * Loosen dependency requirements
+
+* Enhancements
+  * Upgrade to SaxMachine 1 [#234][]
+  * Upgrade to Rspec 3
+  * Move lstrip before preprocess [#216][]
+
+[#216]: https://github.com/feedjira/feedjira/pull/216
+[#234]: https://github.com/feedjira/feedjira/pull/234
+
+## 1.3.1
+
+* Bug fixes
+  * Don't duplicate content in preprocessed feeds [#236][] [#237][]
+
+[#236]: https://github.com/feedjira/feedjira/issues/236
+[#237]: https://github.com/feedjira/feedjira/pull/237
+
 ## 1.3.0
 
 * General
